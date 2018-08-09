@@ -1,0 +1,25 @@
+cd ~/Desktop   ---change directory
+
+mkdir svgs   ---make directory
+
+git init   ---initiate git
+
+git status   ---status of files
+
+git add <file name>  ---add file to commit
+
+git commit -m "any comment"   ---to commit to master
+
+git branch    ---to see branches
+
+git checkout -b <new branch name>   ---create new branch
+
+git checkout <branch name>   ---switch branches
+
+<!--create new repo online and paste git commands to clone local folder-->
+
+git push origin <branch name>  ---push to github
+
+<!--merge branches online-->
+
+git pull origin master  ---pull from github
