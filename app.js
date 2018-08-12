@@ -17,9 +17,28 @@ mongoose.connect('mongodb://first:avadh123@ds113906.mlab.com:13906/firstnodejs',
     console.log('connected!!!');
 });
 
-router.get('/',function(req,res){
-	return res.json({'js':"ajsna"});
-})
+//fetching records (retrieve)
+
+router.route('/products').get(function (req,res) {
+	product.find(function (err, products) {
+		if(err){
+			res.send(err);
+		}
+		res.send(products);
+	});
+});
+
+router.route('/products/:product_id').get(function (req, res) {
+	
+	product.findById(req.params.product_id, function(err, prod){
+		if(err){
+			res.send(err);
+		}
+		res.json(prod);
+	});
+});
+
+//creating records
 		
 router.route('/products').post(function (req, res) {
 	console.log("in add");
@@ -39,6 +58,42 @@ router.route('/products').post(function (req, res) {
     });
 });
 
+
+//updating records
+
+router.route('/products/:product_id').put(function (req,res) {
+	
+	product.findById(req.params.product_id, function (err, prod) {
+		if (err){
+			res.send(err);
+		}
+		prod.title = req.body.title;
+		prod.price = req.body.price;
+		prod.instock = req.body.instock;
+		prod.photo = req.body.photo;
+		prod.save(function (err) {
+			if(err)
+				res.send(err);
+
+			res.json({ message: 'product updated!' });
+		});
+
+	});
+});
+
+
+//Delete records
+
+router.route('/products/:product_id').delete(function (req, res) {
+	
+	product.remove({ _id: req.params.product_id }, function (err, prod) {
+		if(err){
+			res.send(err);
+		}
+
+		res.json({message: 'successfully deleated'});
+	});
+});
 app.use(cors());
 app.use("/api", router);
 app.listen(port);
