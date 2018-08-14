@@ -27,7 +27,7 @@ router.route('/products').get(function (req,res) {
 		res.send(products);
 	});
 });
-
+/*
 router.route('/products/:product_id').get(function (req, res) {
 	
 	product.findById(req.params.product_id, function(err, prod){
@@ -35,6 +35,24 @@ router.route('/products/:product_id').get(function (req, res) {
 			res.send(err);
 		}
 		res.json(prod);
+	});
+});*/		
+
+router.route('/products/:title').get(function (req, res) {
+	
+	product.findOne({'title': req.params.title}, function(err, prod){
+		console.log(prod)
+		if(err){
+			return res.send(err);
+		}else{
+			if(prod){
+				return res.json(prod.price);
+			}else{
+				return res.json({"msg":prod})
+			}
+			
+		}
+		
 	});
 });
 
